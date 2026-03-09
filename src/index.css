@@ -34,3 +34,11 @@ select option {
   background: #0f1525;
   color: #fff;
 }
+
+@media print {
+  body { background: white !important; color: black !important; }
+  .print\:hidden { display: none !important; }
+  #receipt { border: 1px solid #ddd !important; background: white !important; }
+  #receipt * { color: #1a1a2e !important; }
+  #receipt .text-\[\#00F5A0\] { color: #00a86b !important; }
+}

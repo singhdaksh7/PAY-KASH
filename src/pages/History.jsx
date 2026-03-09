@@ -62,11 +62,12 @@ export default function History() {
             const other = isSent ? tx.to : tx.from;
             const name = typeof other === "object" ? other.name : "User";
             return (
-              <div key={tx._id} className="flex items-center justify-between py-3.5 border-b border-white/[0.03]">
+              <button key={tx._id} onClick={() => navigate(`/receipt?id=${tx._id}`)}
+                className="w-full flex items-center justify-between py-3.5 border-b border-white/[0.03] hover:bg-white/[0.02] transition text-left">
                 <div className="flex items-center gap-3">
                   <div className={`w-9 h-9 rounded-xl flex items-center justify-center text-sm ${
                     isSent ? "bg-accent-red/15 text-accent-red" : "bg-[#00F5A0]/15 text-[#00F5A0]"}`}>
-                    {isSent ? "↑" : "↓"}
+                    {isSent ? "S" : "R"}
                   </div>
                   <div>
                     <div className="text-sm font-semibold">{isSent ? `To ${name}` : `From ${name}`}</div>
@@ -75,11 +76,11 @@ export default function History() {
                 </div>
                 <div className="text-right">
                   <div className={`text-sm font-bold ${isSent ? "text-accent-red" : "text-[#00F5A0]"}`}>
-                    {isSent ? "-" : "+"}{tx.amount.toLocaleString()} CC
+                    {isSent ? "-" : "+"}{tx.amount.toLocaleString()} PK
                   </div>
                   <div className="text-[11px] text-muted">{formatDate(tx.createdAt)}</div>
                 </div>
-              </div>
+              </button>
             );
           })}
         </div>

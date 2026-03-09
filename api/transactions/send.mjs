@@ -3,6 +3,7 @@ import connectDB from "../_lib/db.mjs";
 import User from "../_lib/models/User.mjs";
 import Transaction from "../_lib/models/Transaction.mjs";
 import { getAuthUser, handleCors, sendError } from "../_lib/auth.mjs";
+import { createNotification } from "../_lib/notify.mjs";
 
 export default async function handler(req, res) {
   if (handleCors(req, res, ["POST"])) return;
@@ -30,7 +31,7 @@ export default async function handler(req, res) {
     }
     if (txAmount > 50000) {
       await session.abortTransaction();
-      return sendError(res, 400, "Max transaction limit is 50,000 CC");
+      return sendError(res, 400, "Max transaction limit is 50,000 PK");
     }
     if (authUser._id.toString() === toUserId) {
       await session.abortTransaction();
@@ -42,7 +43,7 @@ export default async function handler(req, res) {
 
     if (!receiver) { await session.abortTransaction(); return sendError(res, 404, "Recipient not found"); }
     if (!receiver.isActive) { await session.abortTransaction(); return sendError(res, 400, "Recipient is inactive"); }
-    if (sender.balance < txAmount) { await session.abortTransaction(); return sendError(res, 400, `Insufficient balance. You have ${sender.balance} CC`); }
+    if (sender.balance < txAmount) { await session.abortTransaction(); return sendError(res, 400, `Insufficient balance. You have ${sender.balance} PK`); }
 
     const sBefore = sender.balance, rBefore = receiver.balance;
     sender.balance -= txAmount;
@@ -60,9 +61,22 @@ export default async function handler(req, res) {
 
     await session.commitTransaction();
 
+    createNotification({
+      user: receiver._id, type: "money_received",
+      title: "Money Received",
+      message: `${sender.name} sent you ${txAmount} PK`,
+      relatedUser: sender._id, relatedTransaction: tx[0]._id, amount: txAmount,
+    });
+    createNotification({
+      user: sender._id, type: "money_sent",
+      title: "Money Sent",
+      message: `You sent ${txAmount} PK to ${receiver.name}`,
+      relatedUser: receiver._id, relatedTransaction: tx[0]._id, amount: txAmount,
+    });
+
     res.status(200).json({
       success: true,
-      message: `Sent ${txAmount} CC to ${receiver.name}`,
+      message: `Sent ${txAmount} PK to ${receiver.name}`,
       transaction: {
         id: tx[0]._id, referenceId: tx[0].referenceId,
         amount: txAmount, to: receiver.toSafe(), note: note || "",

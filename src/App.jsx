@@ -7,6 +7,11 @@ import Dashboard from "./pages/Dashboard";
 import Send from "./pages/Send";
 import History from "./pages/History";
 import Admin from "./pages/Admin";
+import Profile from "./pages/Profile";
+import QRCode from "./pages/QRCode";
+import Requests from "./pages/Requests";
+import Notifications from "./pages/Notifications";
+import Receipt from "./pages/Receipt";
 
 function ProtectedRoute({ children, adminOnly = false }) {
   const { user, loading } = useAuth();
@@ -33,6 +38,11 @@ function AppRoutes() {
         <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
         <Route path="/send" element={<ProtectedRoute><Send /></ProtectedRoute>} />
         <Route path="/history" element={<ProtectedRoute><History /></ProtectedRoute>} />
+        <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+        <Route path="/qr" element={<ProtectedRoute><QRCode /></ProtectedRoute>} />
+        <Route path="/requests" element={<ProtectedRoute><Requests /></ProtectedRoute>} />
+        <Route path="/notifications" element={<ProtectedRoute><Notifications /></ProtectedRoute>} />
+        <Route path="/receipt" element={<ProtectedRoute><Receipt /></ProtectedRoute>} />
         <Route path="/admin" element={<ProtectedRoute adminOnly><Admin /></ProtectedRoute>} />
         <Route path="*" element={<Navigate to="/login" />} />
       </Routes>
