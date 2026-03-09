@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #0a0f1a;
+  font-family: "Outfit", system-ui, sans-serif;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #1a2235;
+  border-radius: 4px;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border-color: #00f5a0 !important;
+  box-shadow: 0 0 0 3px rgba(0, 245, 160, 0.1);
+}
+
+select option {
+  background: #0f1525;
+  color: #fff;
+}
