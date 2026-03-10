@@ -5,18 +5,18 @@ export default {
     extend: {
       colors: {
         dark: {
-          900: "#0a0f1a",
+          900: "#13347b",
           800: "#0d1525",
           700: "#0f1a2e",
           600: "#1a2235",
           500: "#243049",
         },
         accent: {
-          green: "#00F5A0",
+          green: "#141815",
           blue: "#00D9F5",
-          red: "#ff6b81",
-          yellow: "#f8b500",
-          purple: "#a29bfe",
+          red: "#c1384c",
+          yellow: "#39362e",
+          purple: "#3429cb",
         },
         muted: "#8892a4",
       },
